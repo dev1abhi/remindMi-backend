@@ -14,6 +14,9 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 
 app.use(express.json());
 
+app.use("/api/alarms", alarmRoutes);
+app.use("/api/users", userRoutes);
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });

@@ -12,11 +12,13 @@
   "description": "remindmi backend",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cron": "^3.5.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.12.0",
-    "mongoose": "^8.9.3",
-    "nodemon": "^3.1.9"
+    "mongoose": "^8.10.1",
+    "nodemon": "^3.1.9",
+    "twilio": "^5.4.4"
   }
 }
