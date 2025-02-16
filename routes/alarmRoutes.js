@@ -5,3 +5,5 @@ const router = express.Router();
 
 // Route for creating a new alarm
 router.post('/createCallAlarm', alarmController.setCallAlarm);
+
+module.exports = router;
