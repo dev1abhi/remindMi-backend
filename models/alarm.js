@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 const alarmSchema = new mongoose.Schema({
     userEmail: { type: String, required: true }, // User's email to fetch alarms
     title: { type: String, required: true }, // Alarm title
-    alarmTime: { type: Date, required: true }, // Alarm date & time
+    datetime: { type: Date, required: true }, // Alarm date & time
     notifications: {
         email: { type: Boolean, default: false },
         whatsapp: { type: Boolean, default: false },
