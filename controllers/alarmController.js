@@ -14,14 +14,16 @@ const client = twilio(accountSid, authToken);
 const setCallAlarm = async (req, res) => {
     try {
         const { title, datetime, notifications, contactInfo } = req.body;
-        const userEmail = req.user.email; // Extracted from authentication middleware
+        const userID = req.user.user.id; // Extracted from authentication middleware
+        console.log("User id from token:", userID);
+        
 
         if (!contactInfo?.phone || !datetime) {
             return res.status(400).json({ error: "Phone number and alarm time are required" });
         }
 
         const alarm = new Alarm({
-            userEmail,// Auto-filled from token
+            userID,// Auto-filled from token
             title: title || "Untitled Alarm",
             datetime,
             notifications: notifications || {
@@ -65,8 +67,8 @@ const triggerAlarmCall = async (phoneNumber) => {
 // Get Alarms By User
 const getAlarmsByUser = async (req, res) => {
     try {
-        const userEmail = req.user.email; // Extract email from authenticated user
-        const alarms = await Alarm.find({ userEmail });
+        const userID = req.user.user.id; // Extract email from authenticated user
+        const alarms = await Alarm.find({ userID });
 
         res.status(200).json({ alarms });
     } catch (error) {

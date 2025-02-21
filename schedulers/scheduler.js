@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
-}).then(() => console.log("Connected to MongoDB"))
+}).then(() => console.log("Connected to MongoDB from scheduler"))
   .catch(err => console.error("MongoDB connection error:", err));
 
 // Run every minute to check for due alarms
