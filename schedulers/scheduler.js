@@ -20,9 +20,9 @@ cron.schedule("* * * * *", async () => {
         const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });
 
         for (const alarm of dueAlarms) {
-            console.log(`Triggering alarm call for ${alarm.phoneNumber} at ${alarm.datetime}`);
+            console.log(`Triggering alarm call for ${alarm.contactInfo.phone} at ${alarm.datetime}`);
             
-            await triggerAlarmCall(alarm.phoneNumber);
+            await triggerAlarmCall(alarm.contactInfo.phone);
             alarm.status = "triggered";
             await alarm.save();
         }
