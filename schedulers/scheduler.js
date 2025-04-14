@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const mongoose = require("mongoose");
 const Alarm = require("../models/alarm");
-const { triggerAlarmCall } = require("../controllers/alarmController");
+const { triggerAlarmCall , triggerEmail , triggerMessage  } = require("../controllers/alarmController");
 
 require("dotenv").config();
 
@@ -16,13 +16,50 @@ cron.schedule("* * * * *", async () => {
     
     const now = new Date();
 
+    // try {
+    //     const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });
+
+    //     for (const alarm of dueAlarms) {
+    //         console.log(`Triggering alarm call for ${alarm.contactInfo.phone} at ${alarm.datetime}`);
+            
+    //         await triggerAlarmCall(alarm.contactInfo.phone);
+    //         alarm.status = "triggered";
+    //         await alarm.save();
+    //     }
+    // } catch (error) {
+    //     console.error("Error checking alarms:", error);
+    // }
+
+
     try {
         const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });
 
         for (const alarm of dueAlarms) {
-            console.log(`Triggering alarm call for ${alarm.contactInfo.phone} at ${alarm.datetime}`);
-            
-            await triggerAlarmCall(alarm.contactInfo.phone);
+            const { phone, email } = alarm.contactInfo;
+            const { call, sms, whatsapp, email: emailNotif } = alarm.notifications || {};
+            const title = alarm.title || "Reminder";
+            const datetime = alarm.datetime || new Date();
+
+            console.log(`Triggering notifications for ${phone || email} at ${alarm.datetime}`);
+
+            // Call
+            if (call && phone) {
+                await triggerAlarmCall(phone);
+                console.log(`Call triggered for ${phone}`);
+            }
+
+            // SMS / WhatsApp
+            if ((sms || whatsapp) && phone) {
+                await triggerMessage(phone, title);
+                console.log(`Message triggered for ${phone}: ${title}`);
+            }
+
+            // Email
+            if (emailNotif && email) {
+                await triggerEmail(email, title , datetime);
+                console.log(`Email triggered for ${email}: ${title}`);
+            }
+
             alarm.status = "triggered";
             await alarm.save();
         }

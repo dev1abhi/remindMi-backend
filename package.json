@@ -23,6 +23,7 @@
     "mongoose": "^8.10.1",
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.9",
+    "notificationapi-node-server-sdk": "^2.3.2",
     "twilio": "^5.4.4"
   }
 }
