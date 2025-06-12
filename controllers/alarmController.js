@@ -26,8 +26,9 @@ const createCallAlarm = async (req, res) => {
         const userID = req.user.user.id; // Extracted from authentication middleware
         console.log("User id from token:", userID);
 
+        //compulsory phone and datetime
         if (!contactInfo?.phone || !datetime) {
-            return res.status(400).json({ error: "Phone number and alarm time are required" });
+            return res.status(400).json({ error: "Phone number or alarm time is missing" });
         }
 
         // Filter to only include turned-on notifications
@@ -47,7 +48,7 @@ const createCallAlarm = async (req, res) => {
             notifications: enabledNotifications,
             contactInfo: {
                 email: contactInfo?.email || "",
-                phone: contactInfo.phone,
+                phone: contactInfo.phone || "",
             },
             status: "pending",
         });
@@ -104,6 +105,7 @@ const triggerEmail = async (email, title, datetime) => {
           id: email,
           email,
         },
+        //mergeTags should be strictly according to the template
         mergeTags: {
           title,
           datetime:formattedDatetime,
