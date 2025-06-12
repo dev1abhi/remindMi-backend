@@ -88,12 +88,12 @@ const triggerMessage = async (phone, title) => {
 const triggerEmail = async (email, title, datetime) => {
     try {
 
-    const date = new Date(datetime);
-    const formattedDatetime = date.toLocaleString('en-IN', {
-      dateStyle: 'long',
-      timeStyle: 'short',
-      timeZone: 'Asia/Kolkata', // IST timezone
-    });
+    // const date = new Date(datetime);
+    // const formattedDatetime = date.toLocaleString('en-IN', {
+    //   dateStyle: 'long',
+    //   timeStyle: 'short',
+    //   timeZone: 'Asia/Kolkata', // IST timezone
+    // });
 
       await notificationapi.send({
         notificationId: 'remindmi_email_alarm', // Match your NotificationAPI template ID
@@ -103,7 +103,7 @@ const triggerEmail = async (email, title, datetime) => {
         },
         mergeTags: {
           title,
-          formattedDatetime,
+          datetime,
         }
       });
   

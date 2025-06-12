@@ -15,7 +15,8 @@ cron.schedule("* * * * *", async () => {
     console.log("Checking for due alarms...");
     
     const now = new Date();
-
+    
+    // console.log(`Current time: ${now}`);
 
     try {
         const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });

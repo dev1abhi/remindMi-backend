@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/trigger-alarms', async (req, res) => {
   const now = new Date();
+  //console.log(`Checking for due alarms at ${now.toISOString()}`);
 
   try {
     const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });
