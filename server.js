@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const alarmRoutes = require('./routes/alarmRoutes');
 const userRoutes = require('./routes/userRoutes');
+const healthRoute = require('./routes/healthRoute');
 require("./schedulers/scheduler"); // Import scheduler
 
 require('dotenv').config();
@@ -24,8 +25,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use('/', healthRoute);
 app.use("/alarms", alarmRoutes);
 app.use("/users", userRoutes);
+
+
 
 
 app.use((err, req, res, next) => {

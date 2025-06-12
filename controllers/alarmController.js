@@ -19,43 +19,6 @@ notificationapi.init(
     process.env.NOTIFICATIONAPI_CLIENT_SECRET
 );
 
-// Set Call Alarm
-// const setCallAlarm = async (req, res) => {
-//     try {
-//         const { title, datetime, notifications, contactInfo } = req.body;
-//         const userID = req.user.user.id; // Extracted from authentication middleware
-//         console.log("User id from token:", userID);
-        
-
-//         if (!contactInfo?.phone || !datetime) {
-//             return res.status(400).json({ error: "Phone number and alarm time are required" });
-//         }
-
-//         const alarm = new Alarm({
-//             userID,// Auto-filled from token
-//             title: title || "Untitled Alarm",
-//             datetime,
-//             notifications: notifications || {
-//                 email: false,
-//                 whatsapp: false,
-//                 sms: false,
-//                 call: false,
-//             },
-//             contactInfo: {
-//                 email: contactInfo?.email || "",
-//                 phone: contactInfo.phone,
-//             },
-//             status: "pending",
-//         });
-
-//         await alarm.save();
-//         res.status(201).json({ message: "Alarm set successfully", alarm });
-//     } catch (error) {
-//         console.error("Error setting alarm:", error);
-//         res.status(500).json({ error: "Failed to set alarm", details: error.message });
-//     }
-// };
-
 
 const createCallAlarm = async (req, res) => {
     try {
