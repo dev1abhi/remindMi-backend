@@ -16,20 +16,6 @@ cron.schedule("* * * * *", async () => {
     
     const now = new Date();
 
-    // try {
-    //     const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });
-
-    //     for (const alarm of dueAlarms) {
-    //         console.log(`Triggering alarm call for ${alarm.contactInfo.phone} at ${alarm.datetime}`);
-            
-    //         await triggerAlarmCall(alarm.contactInfo.phone);
-    //         alarm.status = "triggered";
-    //         await alarm.save();
-    //     }
-    // } catch (error) {
-    //     console.error("Error checking alarms:", error);
-    // }
-
 
     try {
         const dueAlarms = await Alarm.find({ datetime: { $lte: now }, status: "pending" });

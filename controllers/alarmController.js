@@ -124,6 +124,14 @@ const triggerMessage = async (phone, title) => {
 //Trigger email
 const triggerEmail = async (email, title, datetime) => {
     try {
+
+    const date = new Date(datetime);
+    const formattedDatetime = date.toLocaleString('en-IN', {
+      dateStyle: 'long',
+      timeStyle: 'short',
+      timeZone: 'Asia/Kolkata', // IST timezone
+    });
+
       await notificationapi.send({
         notificationId: 'remindmi_email_alarm', // Match your NotificationAPI template ID
         user: {
@@ -132,7 +140,7 @@ const triggerEmail = async (email, title, datetime) => {
         },
         mergeTags: {
           title,
-          datetime,
+          formattedDatetime,
         }
       });
   
@@ -176,7 +184,7 @@ const getAlarmsByUser = async (req, res) => {
     }
 };
 
-
+// Delete Alarm
 const deleteAlarm = async (req, res) => {
     const alarmId = req.params.id;
   
