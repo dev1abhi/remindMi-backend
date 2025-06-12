@@ -17,7 +17,7 @@ const client = twilio(accountSid, authToken);
 notificationapi.init(
     process.env.NOTIFICATIONAPI_CLIENT_ID,
     process.env.NOTIFICATIONAPI_CLIENT_SECRET
-  )
+);
 
 // Set Call Alarm
 // const setCallAlarm = async (req, res) => {
@@ -110,7 +110,7 @@ const triggerMessage = async (phone, title) => {
         },
         mergeTags: {
           title: title,
-          type: 'SMS Reminder'
+          type: 'RemindMi'
         },
       });
       console.log(`SMS/WhatsApp notification sent to ${phone}`);
@@ -150,25 +150,25 @@ const triggerEmail = async (email, title, datetime) => {
     }
   };
 
+// Trigger Alarm Call using NotificationAPI
+const triggerAlarmCall = async (phoneNumber , title) => {
+  try {
+    const response = await notificationapi.send({
+      type: 'remindmi_call_alarm', // Your call notification template ID
+      to: {
+        number: phoneNumber // e.g., '+919876543210'
+      },
+      mergeTags: {
+        comment : title
+      }
+    });
 
-
-
-
-// Trigger Alarm Call
-const triggerAlarmCall = async (phoneNumber) => {
-    try {
-        const call = await client.calls.create({
-            from: fromNumber,
-            to: phoneNumber,
-            twiml: "<Response><Say>This is your scheduled alarm reminder. Please take action.</Say></Response>",
-        });
-
-        console.log("Alarm call triggered:", call.sid);
-        return call;
-    } catch (error) {
-        console.error("Error triggering alarm call:", error.message);
-        throw error;
-    }
+    console.log("Alarm call triggered via NotificationAPI:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error triggering alarm call via NotificationAPI:", error.message);
+    throw error;
+  }
 };
 
 // Get Alarms By User

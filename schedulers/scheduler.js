@@ -30,7 +30,7 @@ cron.schedule("* * * * *", async () => {
 
             // Call
             if (call && phone) {
-                await triggerAlarmCall(phone);
+                await triggerAlarmCall(phone,title);
                 console.log(`Call triggered for ${phone}`);
             }
 
