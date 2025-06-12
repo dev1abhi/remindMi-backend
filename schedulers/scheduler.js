@@ -14,8 +14,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 cron.schedule("* * * * *", async () => {
     console.log("Checking for due alarms...");
     
-    const now = new Date();
-    
+    //const now = new Date();
+
+    // Get current time in UTC only during development
+  const now = process.env.NODE_ENV === "development"
+    ? new Date(new Date().toISOString()) // force UTC
+    : new Date(); // already UTC in production (like on Vercel)
+
     // console.log(`Current time: ${now}`);
 
     try {
