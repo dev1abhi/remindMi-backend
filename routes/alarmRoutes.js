@@ -6,7 +6,7 @@ const Alarm = require('../models/alarm');
 
 const router = express.Router();
 
-router.post('/trigger-alarms', async (req, res) => {
+router.get('/trigger-alarms', async (req, res) => {
   const now = new Date();
 
   try {
