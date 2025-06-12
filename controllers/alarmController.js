@@ -106,7 +106,7 @@ const triggerEmail = async (email, title, datetime) => {
         },
         mergeTags: {
           title,
-          formattedDatetime,
+          datetime:formattedDatetime,
         }
       });
   
