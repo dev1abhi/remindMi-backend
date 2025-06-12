@@ -2,7 +2,7 @@ const express = require('express');
 const alarmController = require('../controllers/alarmController');
 const authMiddleware = require("../middleware/auth"); // Ensure authentication
 const { triggerAlarmCall, triggerEmail, triggerMessage } = require('../controllers/alarmController');
-
+const Alarm = require('../models/alarm');
 
 const router = express.Router();
 
